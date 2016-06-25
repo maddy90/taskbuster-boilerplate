@@ -13,6 +13,11 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from .secret_key import *
+from django.utils.translation import ugettext_lazy as _
+LANGUAGES = (
+    ('en', _('English')),
+    ('ca', _('Catalan')),
+)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -29,13 +34,16 @@ def get_env_variable(var_name):
         error_msg = "Set the %s environment variable" % var_name
         raise ImproperlyConfigured(error_msg)
  
-SECRET_KEY = get_env_variable('SECRET_KEY')
-#SECRET_KEY="your_secret_django_key"
+#SECRET_KEY = get_env_variable('SECRET_KEY')
+SECRET_KEY="your_secret_django_key"
+print(SECRET_KEY)
 # SECURITY WARNING: don't run with debug turned on in production!
 
 ALLOWED_HOSTS = []
 
-
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
 # Application definition
 
 INSTALLED_APPS = (
@@ -49,6 +57,7 @@ INSTALLED_APPS = (
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -71,6 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -103,6 +113,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+TIME_ZONE = 'Europe/Madrid'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/

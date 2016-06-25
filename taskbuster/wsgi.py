@@ -12,6 +12,6 @@ import os
 from django.core.wsgi import get_wsgi_application
 
 #print(os.environ.get("SAMPLE"))
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "taskbuster.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "taskbuster.settings.development")
 
 application = get_wsgi_application()
